@@ -1,13 +1,10 @@
 import java.time.LocalDate
 import scala.util.Random
+import java.lang.Double as JDouble
 
 @main def hello(): Unit =
-  println("Hello world!")
-  println(msg)
 
-  val person = Person("Mike", LocalDate.of(2010, 1, 1))
-
-  person match
+  Person("Mike", LocalDate.of(2020, 1, 1)) match
     case Child(name)     => println(s"$name is a child")
     case Teenager(name)  => println(s"$name is a teenager")
     case Adult(name)     => println(s"$name is an adult")
@@ -17,12 +14,10 @@ import scala.util.Random
 
   val r = Random()
   val n =
-    if (r.nextBoolean()) java.lang.Double(r.nextDouble().toString())
-    else -java.lang.Double(r.nextDouble().toString())
+    if (r.nextBoolean()) JDouble(r.nextDouble().toString())
+    else -JDouble(r.nextDouble().toString())
 
   n match
     case PositiveNumber() => println(s"$n is positive")
     case NegativeNumber() => println(s"$n is negative")
     case _                => println(s"$n is a zero")
-
-def msg = "I was compiled by Scala 3. :)"
