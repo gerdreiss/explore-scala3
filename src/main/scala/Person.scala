@@ -3,8 +3,7 @@ import java.time.Period
 
 case class Person(name: String, birthday: LocalDate)
 
-extension (person: Person)
-  def age: Int = Period.between(person.birthday, LocalDate.now()).getYears()
+extension (person: Person) def age: Int = Period.between(person.birthday, LocalDate.now()).getYears
 
 object Child:
   def unapply(person: Person): Option[String] =
