@@ -13,12 +13,12 @@ object Main extends ZIOAppDefault:
 
   private def matchRandomPerson: IO[IOException, Unit] =
     Person("Mike", LocalDate.of(r.between(1900, 2030), 1, 1)) match
-      case p @ Child(name)    => Console.printLine(s"$name is a ${p.age} years old child")
-      case p @ Teenager(name) => Console.printLine(s"$name is a ${p.age} years old teenager")
-      case p @ Adult(name)    => Console.printLine(s"$name is a ${p.age} years old adult")
-      case p @ Retired(name)  => Console.printLine(s"$name is ${p.age} years old and probably retired")
-      case p @ Dead(name)     => Console.printLine(s"$name would be ${p.age} years old and probably dead")
-      case Person(name, _)    => Console.printLine(s"$name is not born yet")
+      case p @ Child(name, age)    => Console.printLine(s"$name is a $age years old child")
+      case p @ Teenager(name, age) => Console.printLine(s"$name is a $age years old teenager")
+      case p @ Adult(name, age)    => Console.printLine(s"$name is a $age years old adult")
+      case p @ Retired(name, age)  => Console.printLine(s"$name is $age years old and probably retired")
+      case p @ Dead(name, age)     => Console.printLine(s"$name would be $age years old and probably dead")
+      case Person(name, _)         => Console.printLine(s"$name is not born yet")
 
   private def matchRandomNumber: IO[IOException, Unit] =
     val n: JDouble =
