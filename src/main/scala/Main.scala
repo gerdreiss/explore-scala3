@@ -7,12 +7,13 @@ import scala.util.Random
 
 object Main extends ZIOAppDefault:
   private val r = Random()
+  private val mike = Person("Mike", LocalDate.of(r.between(1900, 2030), 1, 1))
 
   def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
-    matchRandomPerson *> matchRandomNumber
+    matchRandomPerson *> matchRandomNumber *> showTypeClass
 
   private def matchRandomPerson: IO[IOException, Unit] =
-    Person("Mike", LocalDate.of(r.between(1900, 2030), 1, 1)) match
+    mike match
       case Child(name, age)    => Console.printLine(s"$name is a $age years old child")
       case Teenager(name, age) => Console.printLine(s"$name is a $age years old teenager")
       case Adult(name, age)    => Console.printLine(s"$name is a $age years old adult")
@@ -29,3 +30,6 @@ object Main extends ZIOAppDefault:
       case PositiveNumber() => Console.printLine(s"$n is positive")
       case NegativeNumber() => Console.printLine(s"$n is negative")
       case _                => Console.printLine(s"$n is a zero")
+
+  private def showTypeClass: IO[IOException, Unit] =
+    Console.printLine(s"Display Person using Show type class: ${mike.show}")
