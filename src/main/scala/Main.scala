@@ -1,3 +1,4 @@
+import cats.data.Ior
 import zio.*
 
 import java.io.IOException
@@ -10,7 +11,7 @@ object Main extends ZIOAppDefault:
   private val mike = Person("Mike", LocalDate.of(r.between(1900, 2030), 1, 1))
 
   def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
-    matchRandomPerson *> matchRandomNumber *> showTypeClass
+    matchRandomPerson *> matchRandomNumber *> showTypeClass *> exploreIor
 
   private def matchRandomPerson: IO[IOException, Unit] =
     mike match
@@ -33,3 +34,20 @@ object Main extends ZIOAppDefault:
 
   private def showTypeClass: IO[IOException, Unit] =
     Console.printLine(s"Display Person using Show type class: ${mike.show}")
+
+  private def exploreIor: Task[Unit] = {
+    val maybeIor = Ior
+      .fromOptions(
+        Option.when(Random.nextBoolean())(()),
+        Option.when(Random.nextBoolean())(())
+      )
+    maybeIor match {
+      case None    => Console.printLine("None")
+      case Some(v) =>
+        v match {
+          case Ior.Left(_)    => Console.printLine("Ior.Left")
+          case Ior.Right(_)   => Console.printLine("Ior.Right")
+          case Ior.Both(_, _) => Console.printLine("Ior.Both")
+        }
+    }
+  }
