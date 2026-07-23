@@ -5,9 +5,13 @@ case class Person(name: String, birthday: LocalDate)
 
 extension (person: Person) def age: Int = Period.between(person.birthday, LocalDate.now()).getYears
 
+object Baby:
+  def unapply(person: Person): Option[String] =
+    Option.when(person.age == 0)(person.name)
+
 object Child:
   def unapply(person: Person): Option[(String, Int)] =
-    Option.when(person.age >= 0 && person.age <= 12)((person.name, person.age))
+    Option.when(person.age >= 1 && person.age <= 12)((person.name, person.age))
 
 object Teenager:
   def unapply(person: Person): Option[(String, Int)] =

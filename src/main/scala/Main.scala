@@ -15,6 +15,7 @@ object Main extends ZIOAppDefault:
 
   private def matchRandomPerson: IO[IOException, Unit] =
     mike match
+      case Baby(name)          => Console.printLine(s"$name is a baby")
       case Child(name, age)    => Console.printLine(s"$name is a $age years old child")
       case Teenager(name, age) => Console.printLine(s"$name is a $age years old teenager")
       case Adult(name, age)    => Console.printLine(s"$name is a $age years old adult")
@@ -35,19 +36,14 @@ object Main extends ZIOAppDefault:
   private def showTypeClass: IO[IOException, Unit] =
     Console.printLine(s"Display Person using Show type class: ${mike.show}")
 
-  private def exploreIor: Task[Unit] = {
-    val maybeIor = Ior
-      .fromOptions(
-        Option.when(Random.nextBoolean())(()),
-        Option.when(Random.nextBoolean())(())
-      )
-    maybeIor match {
+  private def exploreIor: Task[Unit] =
+    Ior.fromOptions(
+      Option.when(Random.nextBoolean())(()),
+      Option.when(Random.nextBoolean())(())
+    ) match
       case None    => Console.printLine("None")
       case Some(v) =>
-        v match {
+        v match
           case Ior.Left(_)    => Console.printLine("Ior.Left")
           case Ior.Right(_)   => Console.printLine("Ior.Right")
           case Ior.Both(_, _) => Console.printLine("Ior.Both")
-        }
-    }
-  }
