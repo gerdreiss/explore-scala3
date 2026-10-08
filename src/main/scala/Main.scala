@@ -7,8 +7,8 @@ import java.time.LocalDate
 import scala.util.Random
 
 object Main extends ZIOAppDefault:
-  private val r = Random()
-  private val mike = Person("Mike", LocalDate.of(r.between(1900, 2030), 1, 1))
+  private val rand = Random()
+  private val mike = Person("Mike", LocalDate.of(rand.between(1900, 2030), 1, 1))
 
   def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
     matchRandomPerson *> matchRandomNumber *> showTypeClass *> exploreIor
@@ -25,8 +25,8 @@ object Main extends ZIOAppDefault:
 
   private def matchRandomNumber: IO[IOException, Unit] =
     val n: JDouble =
-      if (r.nextBoolean()) JDouble.parseDouble(r.nextDouble().toString)
-      else -JDouble.parseDouble(r.nextDouble().toString)
+      if (rand.nextBoolean()) JDouble.parseDouble(rand.nextDouble().toString)
+      else -JDouble.parseDouble(rand.nextDouble().toString)
 
     n match
       case PositiveNumber() => Console.printLine(s"$n is positive")

@@ -7,20 +7,18 @@ object Byte:
     (b7, b6, b5, b4, b3, b2, b1, b0)
 
   def fromInt(value: Int): Option[Byte] =
-    if value >= 0 && value <= 255 then
-      Some(
-        (
-          ((value >> 7) & 1).toBit,
-          ((value >> 6) & 1).toBit,
-          ((value >> 5) & 1).toBit,
-          ((value >> 4) & 1).toBit,
-          ((value >> 3) & 1).toBit,
-          ((value >> 2) & 1).toBit,
-          ((value >> 1) & 1).toBit,
-          (value & 1).toBit
-        )
+    Option.when(value >= 0 && value <= 255) {
+      (
+        ((value >> 7) & 1).toBit,
+        ((value >> 6) & 1).toBit,
+        ((value >> 5) & 1).toBit,
+        ((value >> 4) & 1).toBit,
+        ((value >> 3) & 1).toBit,
+        ((value >> 2) & 1).toBit,
+        ((value >> 1) & 1).toBit,
+        (value & 1).toBit
       )
-    else None
+    }
 
   // Extension methods for Byte operations
   extension (b: Byte)
