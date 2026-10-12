@@ -8,7 +8,7 @@ import scala.util.Random
 
 object Main extends ZIOAppDefault:
   private val rand = Random()
-  private val mike = Person("Mike", LocalDate.of(rand.between(1900, 2030), 1, 1))
+  private val mike = Person("Mike", LocalDate.of(rand.between(1900, LocalDate.now().getYear() + 10), 1, 1))
 
   def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
     matchRandomPerson *> matchRandomNumber *> showTypeClass *> exploreIor
