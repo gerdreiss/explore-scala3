@@ -1,10 +1,8 @@
 import cats.data.Ior
-import com.github.javafaker.Faker
 import zio.*
 
 import java.io.IOException
 import java.lang.Double as JDouble
-import java.time.{LocalDate, ZoneId}
 import scala.util.Random
 
 object Main extends ZIOAppDefault:
