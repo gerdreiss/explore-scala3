@@ -1,14 +1,16 @@
 import cats.data.Ior
+import com.github.javafaker.Faker
 import zio.*
 
 import java.io.IOException
 import java.lang.Double as JDouble
-import java.time.LocalDate
+import java.time.{LocalDate, ZoneId}
 import scala.util.Random
 
 object Main extends ZIOAppDefault:
+
   private val rand = Random()
-  private val mike = Person("Mike", LocalDate.of(rand.between(1900, LocalDate.now().getYear() + 10), 1, 1))
+  private val mike = Person()
 
   def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
     matchRandomPerson *> matchRandomNumber *> showTypeClass *> exploreIor
@@ -21,7 +23,7 @@ object Main extends ZIOAppDefault:
       case Adult(name, age)    => Console.printLine(s"$name is a $age years old adult")
       case Retired(name, age)  => Console.printLine(s"$name is $age years old and probably retired")
       case Dead(name, age)     => Console.printLine(s"$name would be $age years old and probably dead")
-      case Person(name, _)     => Console.printLine(s"$name is not born yet")
+      case Person(name, _, _)  => Console.printLine(s"$name is not born yet")
 
   private def matchRandomNumber: IO[IOException, Unit] =
     val n: JDouble =
