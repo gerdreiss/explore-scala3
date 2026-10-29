@@ -36,7 +36,7 @@ object Main extends ZIOAppDefault:
       case _                => Console.printLine(s"$n is a zero")
 
   private def showTypeClass: IO[IOException, Unit] =
-    Console.printLine(s"Display Person using Show type class: ${mike.show}")
+    Console.printLine(s"Show[Person]: ${mike.show}")
 
   private def exploreIor: Task[Unit] =
     Ior.fromOptions(
